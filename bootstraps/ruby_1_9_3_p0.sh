@@ -7,7 +7,7 @@ function bootstrap_ruby_1_9_3_p0 {
     echo "== Skipped, already installed"
   else
     cd /tmp
-    git clone https://github.com/sstephenson/ruby-build.git
+    git clone git://github.com/sstephenson/ruby-build.git
     cd ruby-build
     ./install.sh
 
