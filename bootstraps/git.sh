@@ -11,7 +11,7 @@ function bootstrap_git {
     wget http://git-core.googlecode.com/files/git-1.7.8.2.tar.gz
     tar xvf git-1.7.8.2.tar.gz
     pushd git-1.7.8.2
-      ./configure
+      ./configure --with-curl --with-expat
       make && make install
     popd
   fi
