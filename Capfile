@@ -47,7 +47,7 @@ config_path = '/etc/chef'
 namespace :chef do
   desc "Bootstrap a SUSE server and kick-start Chef-Solo"
   task :bootstrap, :roles => :target do
-    run "git clone git://github.com/toamitkumar/chef-susesolo.git #{file_cache_path}"
+    run "git clone git@github.intranet.mckinsey.com:Amit-Kumar/chef-solosuse.git #{file_cache_path}"
     run "cd #{file_cache_path} && source bootstrap.sh"
   end
 
