@@ -8,7 +8,7 @@ if [ -f "/etc/SuSE-release" ]; then
       ruby_version="ree"
     ;;
     11)
-      ruby_version="ruby_1_9_3_p0"
+      ruby_version="ruby_1_9_2_p290"
     ;;
   esac
 fi

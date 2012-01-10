@@ -8,10 +8,10 @@ function bootstrap_git {
   else
     echo "== From sources"
     cd /tmp
-    wget http://git-core.googlecode.com/files/git-1.7.8.2.tar.gz
-    tar xvf git-1.7.8.2.tar.gz
-    pushd git-1.7.8.2
-      ./configure --with-curl --with-expat
+    wget http://git-core.googlecode.com/files/git-1.7.8.3.tar.gz
+    tar xvf git-1.7.8.3.tar.gz
+    pushd git-1.7.8.3
+      ./configure
       make && make install
     popd
   fi
