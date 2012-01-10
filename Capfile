@@ -65,7 +65,7 @@ namespace :chef do
 
   desc "Execute Chef-Solo"
   task :solo, :roles => :target do
-    run "chef-solo -c #{config_path}/solo.rb -j #{dna_path}/#{node}.json -l debug"
+    run "chef-solo -c #{config_path}/solo.rb -j #{dna_path}/#{node}.json -l debug -N test"
 
     exit # subsequent args are not tasks to be run
   end
