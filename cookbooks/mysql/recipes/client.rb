@@ -21,7 +21,7 @@
 
 package "mysql-client" do
   package_name value_for_platform(
-    [ "centos", "redhat", "suse", "fedora", "scientific", "amazon"] => { "default" => "mysql" },
+    [ "centos", "redhat", "suse", "fedora"] => { "default" => "mysql" },
     "default" => "mysql-client"
   )
   action :install
@@ -29,7 +29,9 @@ end
 
 package "mysql-devel" do
   package_name begin
-    if platform?(%w{ centos redhat suse fedora scientific amazon })
+    if platform?('suse')
+      'libmysqlclient-devel'
+    elsif platform?(%w{ centos redhat suse fedora })
       "mysql-devel"
     elsif debian_before_squeeze? || ubuntu_before_lucid?
       "libmysqlclient15-dev"
@@ -40,12 +42,21 @@ package "mysql-devel" do
   action :install
 end
 
-if platform?(%w{ redhat centos fedora suse scientific amazon })
-  package 'ruby-mysql'
-elsif platform?(%w{ debian ubuntu })
-  package "libmysql-ruby"
+if platform?(%w{ debian ubuntu redhat centos fedora })
+
+  package "mysql-ruby" do
+    package_name value_for_platform(
+      [ "centos", "redhat", "fedora"] => { "default" => "ruby-mysql" },
+      ["debian", "ubuntu"] => { "default" => 'libmysql-ruby' },
+      "default" => 'libmysql-ruby'
+    )
+    action :install
+  end
+
 else
+
   gem_package "mysql" do
     action :install
   end
+
 end

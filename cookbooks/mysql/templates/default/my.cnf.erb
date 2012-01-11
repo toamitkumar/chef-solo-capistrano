@@ -113,7 +113,8 @@ max_binlog_size         = <%= node['mysql']['tunable']['max_binlog_size'] %>
 #skip-innodb
 innodb_buffer_pool_size = <%= node['mysql']['tunable']['innodb_buffer_pool_size'] %>
 
-<% if @skip_federated %>
+<% case node['platform'] -%>
+<% when "centos", "redhat", "fedora", "ubuntu" -%>
 #
 # * Federated
 #
@@ -157,7 +158,7 @@ key_buffer              = <%= node['mysql']['tunable']['max_allowed_packet'] %>
 # ndb-connectstring=127.0.0.1
 
 <% case node['platform'] -%>
-<% when "centos", "redhat", "fedora", "suse", "scientific", "amazon"-%>
+<% when "centos", "redhat", "fedora", "suse" -%>
 #
 # * BerkeleyDB
 #

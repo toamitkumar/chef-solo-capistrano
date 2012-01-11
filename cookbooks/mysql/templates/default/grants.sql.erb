@@ -12,4 +12,4 @@ GRANT REPLICATION SLAVE ON *.* TO 'repl'@'%' identified by '<%= node['mysql']['s
 <% if node['mysql']['allow_remote_root'] -%>
 GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '<%= node['mysql']['server_root_password'] %>' WITH GRANT OPTION;
 <% end -%>
-SET PASSWORD FOR 'root'@'localhost' = PASSWORD('<%= node['mysql']['server_root_password'] %>');
+# SET PASSWORD FOR 'root'@'localhost' = PASSWORD('<%= node['mysql']['server_root_password'] %>');

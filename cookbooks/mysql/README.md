@@ -28,7 +28,14 @@ Requires a C compiler and Ruby development package in order to build mysql gem w
 Resources and Providers
 =======================
 
-The LWRP that used to ship as part of this cookbook has been refactored into the [database](https://github.com/opscode/cookbooks/tree/master/database) cookbook.  Please see the README for details on updated usage.
+The cookbook contains a LWRP, `mysql_database` which can be used to manage databases through calls to the MySQL API. The mysql gem is installed to make this usable. The provider currently supports three actions:
+
+* `flush_tables_with_read_lock` - sends the sql command "flush tables with read lock", used for setting up mysql master/slave replication.
+* `unflush_tables` - sends the sql command "unflush tables", used for setting up master/slave replication.
+* `create_db` - specify a database to be created.
+* `query` - send an arbitrary query to the database, this should be used with care. Pass the SQL statement to use with the `sql` resource attribute.
+
+For example see the USAGE section below.
 
 Attributes
 ==========
@@ -63,7 +70,17 @@ On client nodes,
 
 This will install the MySQL client libraries and development headers on the system. It will also install the Ruby Gem `mysql`, so that the cookbook's LWRP (above) can be used. This is done during the compile-phase of the Chef run. On platforms that are known to have a native package (currently Debian, Ubuntu, Red hat, Centos, Fedora and SUSE), the package will be installed. Other platforms will use the RubyGem.
 
-This creates a resource object for the package and does the installation before other recipes are parsed. You'll need to have the C compiler and such (ie, build-essential on Ubuntu) before running the recipes, but we already do that when installing Chef :-). 
+This creates a resource object for the package and does the installation before other recipes are parsed. You'll need to have the C compiler and such (ie, build-essential on Ubuntu) before running the recipes, but we already do that when installing Chef :-). If you want to be able to access a MySQL database via Ruby within another recipe, you could do so, like so:
+
+    mysql_database "create application_production database" do
+      host "localhost"
+      username "root"
+      password node[:mysql][:server_root_password]
+      database "application_production"
+      action :create_db
+    end
+
+This will connect to the MySQL server running on localhost as "root" and password as `mysql[:server_root_password]` attribute (see below) and create the database specified with the `database` parameter. The provider will attempt to determine whether the database exists first.
 
 On server nodes,
 
@@ -85,20 +102,6 @@ For more infromation on the compile vs execution phase of a Chef run:
 
 Changes/Roadmap
 ===============
-
-### v1.2.2
-
-* [COOK-826] mysql::server recipe doesn't quote password string
-* [COOK-834] Add 'scientific' and 'amazon' platforms to mysql cookbook
-
-### v1.2.1
-
-* [COOK-644] Mysql client cookbook 'package missing' error message is confusing
-* [COOK-645] RHEL6/CentOS6 - mysql cookbook contains 'skip-federated' directive which is unsupported on MySQL 5.1
-
-### v1.2.0
-
-* [COOK-684] remove mysql_database LWRP
 
 ### v1.0.8:
 
@@ -125,6 +128,7 @@ Changes/Roadmap
 * fix regressions on debian platform
 * [COOK-578] wrap root password in quotes
 * [COOK-562] expose all tunables in my.cnf
+
 
 License and Author
 ==================
