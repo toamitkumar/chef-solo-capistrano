@@ -16,6 +16,8 @@ http {
   passenger_min_instances <%= @passenger[:min_instances] %>;
   passenger_pool_idle_time <%= @passenger[:pool_idle_time] %>;
   passenger_max_instances_per_app <%= @passenger[:max_instances_per_app] %>;
+  passenger_friendly_error_pages off;
+  
 
   include mime.types;
   default_type application/octet-stream;
@@ -23,17 +25,7 @@ http {
   sendfile <%= @passenger[:sendfile] ? 'on' : 'off' %>;
   tcp_nopush <%= @passenger[:tcp_nopush] ? 'on' : 'off' %>;
   keepalive_timeout <%= @passenger[:keepalive_timeout] %>;
-  <%- if @passenger[:gzip] %>
-    gzip on;
-    gzip_min_length  1000;
-    gzip_proxied     expired no-cache no-store private auth;
-    gzip_types       text/plain application/xml;
-    gzip_disable     "MSIE [1-6]\.";
-  <% else %>
-    gzip off;
-  <% end -%>
-  
-  server_names_hash_bucket_size 64;
+  gzip <%= @passenger[:gzip] ? 'on' : 'off' %>;
 
   include sites.d/*.conf;
 
