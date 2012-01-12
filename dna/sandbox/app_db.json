@@ -3,6 +3,9 @@
   "app_config": {
     "server_name": "172.16.179.136",
     "path": "/srv/p360/current",
-    "environment": "devutility"
+    "environment": "devutility",
+    "user": "toamitkumar",
+    "group": "users",
+    "port": "80"
   }
 }
