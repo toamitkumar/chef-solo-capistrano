@@ -1,6 +1,6 @@
 {
   "run_list": ["role[db]", "role[app]"],
-  "simulator": {
+  "app_config": {
     "server_name": "172.16.179.136",
     "path": "/srv/p360/current",
     "environment": "devutility"

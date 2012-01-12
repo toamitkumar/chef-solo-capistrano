@@ -1,0 +1,14 @@
+server  {
+<% if @default -%>
+  listen <%= @port %> default;
+<% else -%>
+  listen <%= @port %>;
+<% end -%>
+       
+  server_name <%= @server_name %>;
+  root <%= @path %>/public;
+  passenger_enabled on;
+  rails_env <%= @environment %>;
+  passenger_user <%= @user %>;
+  passenger_group <%= @group %>;
+}
