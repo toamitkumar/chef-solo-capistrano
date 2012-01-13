@@ -2,7 +2,7 @@
   "run_list": ["role[db]", "role[app]"],
   "app_config": {
     "server_name": "172.16.179.136",
-    "path": "/srv/p360/current",
+    "path": "/home/p360/current",
     "environment": "devutility",
     "user": "toamitkumar",
     "group": "users",
