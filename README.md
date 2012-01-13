@@ -2,6 +2,7 @@ Things to remember
 ========
 
 * Space in /tmp directory
+* OS user to be create in advance
 
 Overview
 ========
